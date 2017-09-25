@@ -22,9 +22,9 @@ node {
 def notifyBuild(String buildStatus = 'STARTED') {
 	buildStatus = buildStatus ?: 'SUCCESSFUL'
 
-	emailext (
+	mail body: """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' </p> Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+		from: 'jenkins-noreply@hath.ca',
 		subject: "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-		body: """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' </p> Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-		recipients: [[$class: 'DevelopersRecipientProvider']]
-	)
+		to: 'hathaway.bg@gmail.com'
+
 }
