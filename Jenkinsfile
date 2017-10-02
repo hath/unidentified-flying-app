@@ -2,7 +2,7 @@ node {
 	try {
 		notifyBuild('STARTED')
 
-		setBuildStatus("In progress...", "PENDING");
+		setBuildStatus(context, "In progress...", "PENDING");
 
 		stage('Checkout') {
 			checkout scm
@@ -13,11 +13,11 @@ node {
 		}
 
 	} catch (e) {
-		setBuildStatus(e.take(140), "FAILURE");
+		setBuildStatus(context, e.take(140), "FAILURE");
 		currentBuild.result = "FAILED"
 		throw e
 	} finally {
-  		setBuildStatus("Success", "SUCCESS");
+  		setBuildStatus(context, "Success", "SUCCESS");
 		notifyBuild(currentBuild.result)
 	}
 
